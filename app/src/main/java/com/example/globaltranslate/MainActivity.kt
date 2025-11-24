@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,7 +19,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val PERMISSION_REQUEST_CODE = 1001
-    private val OVERLAY_PERMISSION_REQUEST_CODE = 1002
+    
+    // 使用新的Activity Result API替代已废弃的startActivityForResult
+    private val overlayPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (Settings.canDrawOverlays(this)) {
+            Toast.makeText(this, "悬浮窗权限已授予", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "悬浮窗权限被拒绝", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:$packageName")
             )
-            startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
+            overlayPermissionLauncher.launch(intent)
         } else {
             Toast.makeText(this, "权限已授予", Toast.LENGTH_SHORT).show()
         }
@@ -170,18 +181,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "通知权限已授予", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "通知权限被拒绝", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
-            if (Settings.canDrawOverlays(this)) {
-                Toast.makeText(this, "悬浮窗权限已授予", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "悬浮窗权限被拒绝", Toast.LENGTH_SHORT).show()
             }
         }
     }
