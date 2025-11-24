@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">全局翻译</string>
+    <string name="start_service">启动服务</string>
+    <string name="stop_service">停止服务</string>
+    <string name="enable_accessibility">启用无障碍服务</string>
+    <string name="request_permissions">请求权限</string>
+    <string name="notification_title">布局检查服务运行中</string>
+    <string name="notification_content">点击悬浮窗按钮可以修改屏幕文字颜色</string>
+    <string name="notification_channel_name">前台服务通知</string>
+    <string name="notification_channel_desc">显示前台服务状态</string>
+    <string name="inspect_layout">检查布局</string>
+    <string name="change_text_color">改变文字颜色</string>
+    <string name="permission_required">需要悬浮窗权限和通知权限</string>
+    <string name="accessibility_required">需要启用无障碍服务才能检查屏幕布局</string>
+    <string name="service_started">服务已启动</string>
+    <string name="service_stopped">服务已停止</string>
+    <string name="text_color_changed">文字颜色已修改</string>
+</resources>
