@@ -10,11 +10,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.app.NotificationCompat
+import com.example.globaltranslate.ActivityTracker
+import com.example.globaltranslate.LayoutInspectorUtils
 import com.example.globaltranslate.MainActivity
 import com.example.globaltranslate.R
 import com.example.globaltranslate.databinding.LayoutFloatingWindowBinding
@@ -33,7 +36,7 @@ class FloatingService : Service() {
         private const val FLOAT_TAG = "LayoutInspectorFloat"
         var isServiceRunning = false
         const val ACTION_CHANGE_TEXT_COLOR = "com.example.globaltranslate.CHANGE_TEXT_COLOR"
-
+        private  const val  TAG="FloatingService"
     }
 
     override fun onCreate() {
@@ -128,12 +131,18 @@ class FloatingService : Service() {
      * 悬浮窗按钮点击事件
      */
     private fun onFloatingButtonClicked() {
-        Toast.makeText(this, "正在检查布局...", Toast.LENGTH_SHORT).show()
-        
-        // 通知无障碍服务修改文字颜色
-        val intent = Intent(ACTION_CHANGE_TEXT_COLOR)
-        sendBroadcast(intent)
+//        // 通知无障碍服务修改文字颜色
+//        val intent = Intent(ACTION_CHANGE_TEXT_COLOR)
+//        sendBroadcast(intent)
+        // 使用你原来的 LayoutInspectorUtils
+        ActivityTracker.currentActivity?.let {
+            Toast.makeText(this, "正在检查布局...", Toast.LENGTH_SHORT).show()
+            val json = LayoutInspectorUtils.exportViewHierarchyToJson(it)
+            Log.d(TAG, "View 层级结构:\n$json")
+        }?: kotlin.run {
+            Toast.makeText(this, "正在检查布局...", Toast.LENGTH_SHORT).show()
+            Log.i(TAG, "activity为null: ")
+        }
     }
-
 
 }
