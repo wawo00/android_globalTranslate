@@ -32,7 +32,6 @@ android_globalTranslate/
         │   │
         │   └── 📂 service/
         │       ├── 📄 FloatingService.kt          # 前台服务
-        │       └── 📄 LayoutInspectorService.kt   # 无障碍服务
         │
         └── 📂 res/
             ├── 📂 drawable/
@@ -153,21 +152,6 @@ android_globalTranslate/
 - `createNotification()` - 创建通知
 - `showFloatingWindow()` - 显示悬浮窗
 - `onFloatingButtonClicked()` - 处理点击事件
-
-### LayoutInspectorService.kt
-**行数**: ~200  
-**职责**:
-- 无障碍服务实现
-- 布局树遍历
-- UI元素识别
-- 文本颜色修改尝试
-
-**关键方法**:
-- `onServiceConnected()` - 服务连接
-- `onAccessibilityEvent()` - 处理无障碍事件
-- `changeTextColorToRed()` - 修改文字颜色
-- `traverseAndChangeTextColor()` - 遍历节点树
-- `changeNodeTextColor()` - 修改单个节点
 
 ## 🎨 资源文件
 

@@ -11,7 +11,9 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.app.NotificationCompat
 import com.example.globaltranslate.MainActivity
 import com.example.globaltranslate.R
@@ -30,6 +32,8 @@ class FloatingService : Service() {
         private const val CHANNEL_ID = "FloatingServiceChannel"
         private const val FLOAT_TAG = "LayoutInspectorFloat"
         var isServiceRunning = false
+        const val ACTION_CHANGE_TEXT_COLOR = "com.example.globaltranslate.CHANGE_TEXT_COLOR"
+
     }
 
     override fun onCreate() {
@@ -103,13 +107,16 @@ class FloatingService : Service() {
             .setTag(FLOAT_TAG)
             .setLayout(R.layout.layout_floating_window) { view ->
                 // 使用ViewBinding绑定悬浮窗布局
-                val binding = LayoutFloatingWindowBinding.bind(view)
-                
-                // 设置点击事件
-                binding.ivFloatingIcon.setOnClickListener {
+//                view.setOnClickListener{
+//                    onFloatingButtonClicked()
+//                }
+//                val binding = LayoutFloatingWindowBinding.bind(view)
+//                // 设置点击事件
+               view.findViewById<CardView>(R.id.cardView).findViewById<ImageView>(R.id.ivFloatingIcon).setOnClickListener {
                     // 点击悬浮窗按钮时，触发修改文字颜色的操作
                     onFloatingButtonClicked()
                 }
+
             }
             .setShowPattern(ShowPattern.ALL_TIME)
             .setSidePattern(SidePattern.RESULT_SIDE)
@@ -128,7 +135,5 @@ class FloatingService : Service() {
         sendBroadcast(intent)
     }
 
-    companion object {
-        const val ACTION_CHANGE_TEXT_COLOR = "com.example.globaltranslate.CHANGE_TEXT_COLOR"
-    }
+
 }
