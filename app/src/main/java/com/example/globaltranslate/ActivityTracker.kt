@@ -11,7 +11,7 @@ object ActivityTracker: Application.ActivityLifecycleCallbacks {
     /**
      * 在 Application 中注册此追踪器
      */
-    public fun register(application: Application) {
+     fun register(application: Application) {
         application.registerActivityLifecycleCallbacks(this)
     }
 
